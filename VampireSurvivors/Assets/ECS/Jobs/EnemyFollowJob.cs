@@ -5,6 +5,7 @@ using Unity.Transforms;
 
 [BurstCompile]
 [WithAll(typeof(EnemyTag))]
+[WithNone(typeof(Inactive))]
 public partial struct EnemyFollowJob : IJobEntity
 {
     public float DeltaTime;

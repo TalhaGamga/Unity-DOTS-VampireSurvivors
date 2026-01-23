@@ -17,5 +17,7 @@ public class EnemyBaker : Baker<EnemyAuthoring>
         {
             Value = authoring.FollowRange
         });
+
+        AddComponent<Inactive>(entity);
     }
 }
