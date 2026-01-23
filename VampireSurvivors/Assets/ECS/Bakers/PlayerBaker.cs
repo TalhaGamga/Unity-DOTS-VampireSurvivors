@@ -12,5 +12,7 @@ public class PlayerBaker : Baker<PlayerAuthoring>
         {
             Value = authoring.MoveSpeed
         });
+
+        AddComponent<PlayerInput>(entity);
     }
 }
