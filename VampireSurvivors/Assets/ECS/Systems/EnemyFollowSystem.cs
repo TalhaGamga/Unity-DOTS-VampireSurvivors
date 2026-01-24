@@ -12,12 +12,16 @@ public partial struct EnemyFollowSystem : ISystem
         float3 playerPos =
             SystemAPI.GetSingleton<PlayerPosition>().Value;
 
+        int activeCount = SystemAPI.GetSingleton<EnemyCount>().Value;
+
         var job = new EnemyFollowJob
         {
             DeltaTime = SystemAPI.Time.DeltaTime,
-            PlayerPos = playerPos
+            PlayerPos = playerPos,
+            ActiveEnemyCount = math.max(1, activeCount)
         };
 
+        state.Dependency = job.ScheduleParallel(state.Dependency);
         state.Dependency = job.ScheduleParallel(state.Dependency);
     }
 }

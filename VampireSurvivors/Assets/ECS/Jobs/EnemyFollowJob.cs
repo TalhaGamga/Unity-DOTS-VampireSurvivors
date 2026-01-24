@@ -10,30 +10,27 @@ public partial struct EnemyFollowJob : IJobEntity
 {
     public float DeltaTime;
     public float3 PlayerPos;
+    public int ActiveEnemyCount;
 
     public void Execute(
         ref LocalTransform transform,
         in MoveSpeed speed,
-        in FollowRange range,
-        in FormationOffset offset,
-        in DesiredRadius desiredRadius)
+        in FormationIndex index,
+        in DesiredRadius radius)
     {
-        // Target with offset
-        float3 target = PlayerPos + offset.Value;
+        // Angle step based on how many enemies exist
+        float angleStep = math.PI * 2f / ActiveEnemyCount;
+        float angle = index.Value * angleStep;
 
-        float3 toTarget = target - transform.Position;
-        float dist = math.length(toTarget);
+        float3 desiredPos = PlayerPos + new float3(
+            math.cos(angle),
+            math.sin(angle),
+            0f
+        ) * radius.Value;
 
-        // Distance error relative to desired radius
-        float error = dist - desiredRadius.Value;
+        float3 toDesired = desiredPos - transform.Position;
 
-        // If close enough to desired ring ? stop
-        if (math.abs(error) < 0.1f)
-            return;
-
-        float3 dir = math.normalize(toTarget);
-
-        // Move inward or outward to correct spacing
-        transform.Position += dir * error * speed.Value * DeltaTime;
+        // Smooth interpolation
+        transform.Position += toDesired * speed.Value * DeltaTime;
     }
 }

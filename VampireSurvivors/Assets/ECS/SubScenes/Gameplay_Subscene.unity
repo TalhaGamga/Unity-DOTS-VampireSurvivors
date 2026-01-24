@@ -149,8 +149,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemySpawnerAuthoring
   EnemyPrefab: {fileID: 1438910006}
-  Count: 5000
-  SpawnRadius: 5
+  Count: 20000
+  SpawnRadius: 15
 --- !u!4 &47207620
 Transform:
   m_ObjectHideFlags: 0
