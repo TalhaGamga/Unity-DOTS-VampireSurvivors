@@ -13,27 +13,26 @@ public partial struct EnemyFollowJob : IJobEntity
 
     public void Execute(
         ref LocalTransform transform,
-        in MoveSpeed speed,
-        in FollowRange range,
-        in FormationOffset offset,
-        in DesiredRadius desiredRadius)
+        ref EnemyVelocity velocity,
+        in MoveSpeed speed)
     {
-        // Target with offset
-        float3 target = PlayerPos + offset.Value;
+        float3 toPlayer = PlayerPos - transform.Position;
+        float distSq = math.lengthsq(toPlayer);
 
-        float3 toTarget = target - transform.Position;
-        float dist = math.length(toTarget);
-
-        // Distance error relative to desired radius
-        float error = dist - desiredRadius.Value;
-
-        // If close enough to desired ring ? stop
-        if (math.abs(error) < 0.1f)
+        if (distSq < 0.0001f)
             return;
 
-        float3 dir = math.normalize(toTarget);
+        float3 desiredDir = math.normalize(toPlayer);
+        float3 desiredVelocity = desiredDir * speed.Value;
 
-        // Move inward or outward to correct spacing
-        transform.Position += dir * error * speed.Value * DeltaTime;
+        // ?? THIS is the magic (Vampire Survivors feel)
+        float steeringSharpness = 0.1f; // higher = snappier, lower = floatier
+        velocity.Value = math.lerp(
+            velocity.Value,
+            desiredVelocity,
+            1f - math.exp(-steeringSharpness * DeltaTime)
+        );
+
+        transform.Position += velocity.Value * DeltaTime;
     }
 }

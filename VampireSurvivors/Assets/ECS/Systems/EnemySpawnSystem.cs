@@ -9,18 +9,27 @@ public partial struct EnemySpawnSystem : ISystem
     {
         var ecb = new EntityCommandBuffer(state.WorldUpdateAllocator);
 
+        // Runtime-safe random
+        var rng = new Unity.Mathematics.Random(
+            (uint)(SystemAPI.Time.ElapsedTime * 1000 + 1)
+        );
+
         foreach (var (spawner, spawnerEntity) in
                  SystemAPI.Query<RefRO<EnemySpawner>>().WithEntityAccess())
         {
             var prefab = spawner.ValueRO.EnemyPrefab;
             int count = spawner.ValueRO.Count;
-            float radius = spawner.ValueRO.SpawnRadius;
+
+            float minR = spawner.ValueRO.MinSpawnRadius;
+            float maxR = spawner.ValueRO.MaxSpawnRadius;
 
             for (int i = 0; i < count; i++)
             {
                 Entity enemy = ecb.Instantiate(prefab);
 
-                float angle = (float)i / count * math.PI * 2f;
+                float angle = rng.NextFloat(0f, math.PI * 2f);
+                float radius = rng.NextFloat(minR, maxR);
+
                 float3 pos = new float3(
                     math.cos(angle),
                     math.sin(angle),

@@ -7,33 +7,25 @@ public class EnemyBaker : Baker<EnemyAuthoring>
     {
         var entity = GetEntity(TransformUsageFlags.Dynamic);
 
+        // Identity
         AddComponent<EnemyTag>(entity);
+        AddComponent<Inactive>(entity);
 
+        // Movement
         AddComponent(entity, new MoveSpeed
         {
             Value = authoring.MoveSpeed
         });
 
+        AddComponent(entity, new EnemyVelocity
+        {
+            Value = float3.zero
+        });
+
+        // Follow behavior
         AddComponent(entity, new FollowRange
         {
             Value = authoring.FollowRange
-        });
-
-        AddComponent<Inactive>(entity);
-
-        AddComponent(entity, new FormationOffset
-        {
-            Value = new float3(
-        UnityEngine.Random.Range(-1f, 1f),
-        UnityEngine.Random.Range(-1f, 1f),
-        0f
-        )
-        });
-
-        AddComponent(entity, new DesiredRadius
-        {
-            // Spread enemies between 4.5 and 8 units
-            Value = UnityEngine.Random.Range(1f, 5f)
         });
     }
 }

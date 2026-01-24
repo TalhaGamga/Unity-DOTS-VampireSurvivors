@@ -12,7 +12,7 @@ public partial struct EnemyActivationSystem : ISystem
         _timer += SystemAPI.Time.DeltaTime;
 
         // Activate 50 enemies per second (tweakable)
-        if (_timer < 0.02f)
+        if (_timer < 0.75f)
             return;
 
         _timer = 0f;

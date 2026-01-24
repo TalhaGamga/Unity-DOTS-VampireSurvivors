@@ -4,5 +4,6 @@ public struct EnemySpawner : IComponentData
 {
     public Entity EnemyPrefab;
     public int Count;
-    public float SpawnRadius;
+    public float MinSpawnRadius;
+    public float MaxSpawnRadius;
 }

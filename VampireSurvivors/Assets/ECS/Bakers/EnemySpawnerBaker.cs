@@ -10,7 +10,8 @@ public class EnemySpawnerBaker : Baker<EnemySpawnerAuthoring>
         {
             EnemyPrefab = GetEntity(authoring.EnemyPrefab, TransformUsageFlags.Dynamic),
             Count = authoring.Count,
-            SpawnRadius = authoring.SpawnRadius
+            MinSpawnRadius = authoring.MinSpawnRadius,
+            MaxSpawnRadius = authoring.MaxSpawnRadius
         });
     }
 }

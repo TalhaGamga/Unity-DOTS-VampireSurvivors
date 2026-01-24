@@ -150,7 +150,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemySpawnerAuthoring
   EnemyPrefab: {fileID: 1438910006}
   Count: 5000
-  SpawnRadius: 5
+  MinSpawnRadius: 15
+  MaxSpawnRadius: 25
 --- !u!4 &47207620
 Transform:
   m_ObjectHideFlags: 0
@@ -283,6 +284,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4427700846646967123, guid: bec4ebe570240f944bf0af3991663996, type: 3}
+      propertyPath: MoveSpeed
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4427700846646967123, guid: bec4ebe570240f944bf0af3991663996, type: 3}
       propertyPath: FollowRange
       value: 1
