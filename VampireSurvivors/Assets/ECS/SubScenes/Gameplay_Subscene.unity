@@ -150,7 +150,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemySpawnerAuthoring
   EnemyPrefab: {fileID: 1438910006}
   Count: 5000
-  SpawnRadius: 1
+  SpawnRadius: 5
 --- !u!4 &47207620
 Transform:
   m_ObjectHideFlags: 0
@@ -349,7 +349,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9159033886350658611, guid: bec4ebe570240f944bf0af3991663996, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

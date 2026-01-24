@@ -1,4 +1,5 @@
 using Unity.Entities;
+using Unity.Mathematics;
 
 public class EnemyBaker : Baker<EnemyAuthoring>
 {
@@ -19,5 +20,15 @@ public class EnemyBaker : Baker<EnemyAuthoring>
         });
 
         AddComponent<Inactive>(entity);
+
+        AddComponent(entity, new FormationOffset
+        {
+            Value = new float3(
+        UnityEngine.Random.Range(-1f, 1f),
+        0f,
+        UnityEngine.Random.Range(-1f, 1f)
+        )
+        });
+
     }
 }

@@ -27,7 +27,7 @@ public partial struct EnemyActivationSystem : ISystem
                           .WithAll<Inactive>()
                           .WithEntityAccess())
         {
-            ecb.RemoveComponent<Disabled>(entity);
+            //ecb.RemoveComponent<Disabled>(entity);
             ecb.RemoveComponent<Inactive>(entity);
             activated++;
 
