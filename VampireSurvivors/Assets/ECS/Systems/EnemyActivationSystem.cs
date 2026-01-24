@@ -1,4 +1,5 @@
 using Unity.Entities;
+using UnityEngine;
 
 [UpdateInGroup(typeof(SimulationSystemGroup))]
 public partial struct EnemyActivationSystem : ISystem
@@ -7,24 +8,35 @@ public partial struct EnemyActivationSystem : ISystem
 
     public void OnUpdate(ref SystemState state)
     {
+        Debug.Log("EnemyActivationSyustem");
         _timer += SystemAPI.Time.DeltaTime;
 
-        if (_timer < 1f)
+        // Activate 50 enemies per second (tweakable)
+        if (_timer < 0.02f)
             return;
 
         _timer = 0f;
 
         var ecb = new EntityCommandBuffer(state.WorldUpdateAllocator);
 
+        int activated = 0;
+        const int batchSize = 10;
+
         foreach (var (_, entity) in
                  SystemAPI.Query<RefRO<EnemyTag>>()
                           .WithAll<Inactive>()
                           .WithEntityAccess())
         {
+            ecb.RemoveComponent<Disabled>(entity);
             ecb.RemoveComponent<Inactive>(entity);
-            break; // activate ONE enemy per second
+            activated++;
+
+            if (activated >= batchSize)
+                break;
         }
 
         ecb.Playback(state.EntityManager);
+        Debug.Log("EnemyActivationSyustem2");
+
     }
 }
