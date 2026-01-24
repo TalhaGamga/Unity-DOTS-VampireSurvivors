@@ -15,20 +15,25 @@ public partial struct EnemyFollowJob : IJobEntity
         ref LocalTransform transform,
         in MoveSpeed speed,
         in FollowRange range,
-        in FormationOffset offset)
+        in FormationOffset offset,
+        in DesiredRadius desiredRadius)
     {
-        // Each enemy aims for a slightly different point near the player
+        // Target with offset
         float3 target = PlayerPos + offset.Value;
 
         float3 toTarget = target - transform.Position;
-        float distSq = math.lengthsq(toTarget);
+        float dist = math.length(toTarget);
 
-        // Stop when close enough (prevents collapsing)
-        if (distSq <= range.Value * range.Value)
+        // Distance error relative to desired radius
+        float error = dist - desiredRadius.Value;
+
+        // If close enough to desired ring ? stop
+        if (math.abs(error) < 0.1f)
             return;
 
         float3 dir = math.normalize(toTarget);
 
-        transform.Position += dir * speed.Value * DeltaTime;
+        // Move inward or outward to correct spacing
+        transform.Position += dir * error * speed.Value * DeltaTime;
     }
 }

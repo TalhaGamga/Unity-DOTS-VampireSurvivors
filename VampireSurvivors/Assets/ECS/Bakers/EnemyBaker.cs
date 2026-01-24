@@ -25,10 +25,15 @@ public class EnemyBaker : Baker<EnemyAuthoring>
         {
             Value = new float3(
         UnityEngine.Random.Range(-1f, 1f),
-        0f,
-        UnityEngine.Random.Range(-1f, 1f)
+        UnityEngine.Random.Range(-1f, 1f),
+        0f
         )
         });
 
+        AddComponent(entity, new DesiredRadius
+        {
+            // Spread enemies between 4.5 and 8 units
+            Value = UnityEngine.Random.Range(1f, 5f)
+        });
     }
 }
