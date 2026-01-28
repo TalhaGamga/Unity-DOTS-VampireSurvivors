@@ -9,7 +9,6 @@ public partial struct EnemySpawnSystem : ISystem
     {
         var ecb = new EntityCommandBuffer(state.WorldUpdateAllocator);
 
-        // Runtime-safe random
         var rng = new Unity.Mathematics.Random(
             (uint)(SystemAPI.Time.ElapsedTime * 1000 + 1)
         );

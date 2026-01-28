@@ -8,11 +8,10 @@ public partial struct EnemyActivationSystem : ISystem
 
     public void OnUpdate(ref SystemState state)
     {
-        Debug.Log("EnemyActivationSyustem");
         _timer += SystemAPI.Time.DeltaTime;
 
         // Activate 50 enemies per second (tweakable)
-        if (_timer < 0.75f)
+        if (_timer < 0.01f)
             return;
 
         _timer = 0f;
@@ -36,7 +35,6 @@ public partial struct EnemyActivationSystem : ISystem
         }
 
         ecb.Playback(state.EntityManager);
-        Debug.Log("EnemyActivationSyustem2");
 
     }
 }

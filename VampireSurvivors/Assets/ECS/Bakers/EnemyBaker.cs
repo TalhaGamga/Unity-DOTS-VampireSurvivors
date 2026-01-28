@@ -27,5 +27,7 @@ public class EnemyBaker : Baker<EnemyAuthoring>
         {
             Value = authoring.FollowRange
         });
+
+        AddComponent(entity, new Damageable { Health = authoring.Health });
     }
 }
